@@ -1,0 +1,43 @@
+{
+  "editor.renderControlCharacters": true,
+  "editor.minimap.enabled": true,
+  "editor.formatOnPaste": true,
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  // Controls the way folding ranges are computed. 'auto' picks uses a language specific folding strategy, if available. 'indentation' forces that the indentation based folding strategy is used.
+  "editor.foldingStrategy": "indentation",
+  // Format a file on save. A formatter must be available.
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "eslint.autoFixOnSave": true,
+  // Emmet code completion - https://docs.emmet.io/
+  "emmet.triggerExpansionOnTab": true,
+  // File associations
+  "files.associations": {
+    "*.jsx": "javascriptreact",
+    "*.js": "javascriptreact"
+  },
+  "files.trimTrailingWhitespace": true,
+  "git.enabled": true,
+  "guides.overrideDefault": true,
+  // Active indentation guides rendering width.
+  "guides.active.width": 2,
+  // Enable/disable default JavaScript formatter (For Prettier)
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  "prettier.singleQuote": false,
+  "prettier.tabWidth": 2,
+  // Use 'prettier-eslint' instead of 'prettier'. Other settings will only be fallbacks in case they could not be inferred from eslint rules.
+  "prettier.eslintIntegration": true,
+  // Remove these files / folders from search results.
+  "search.exclude": {
+    "someFolder/": true,
+    "somefile": true
+  },
+  // Removes these files / folders from your editor window.
+  "files.exclude": {
+    "somefolder/": true,
+    "somefile": true
+  },
+  "window.zoomLevel": 0
+}

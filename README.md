@@ -1,2 +1,3 @@
-# minesweeper
+# Minesweeper
+
 A Minesweeper clone
