@@ -12,7 +12,6 @@ class App extends Component {
           marked,
           rows,
           handleFlagged,
-          handleUnFlagged,
           handleSelected,
           handleReset
         }) => (
@@ -21,7 +20,6 @@ class App extends Component {
             <GameBoard
               rows={rows}
               onFlagged={handleFlagged}
-              onUnFlagged={handleUnFlagged}
               onSelected={handleSelected}
             />
           </div>

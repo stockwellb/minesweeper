@@ -6,7 +6,7 @@ const StyledRow = styled.div`
   display: flex;
 `;
 
-const GameBoard = ({ rows }) => {
+const GameBoard = ({ rows, onFlagged, onSelected }) => {
   return (
     <div>
       {rows.map((row, index) => (
@@ -17,6 +17,8 @@ const GameBoard = ({ rows }) => {
               mode={cell.mode}
               isBomb={cell.isBomb}
               neighbors={cell.neighbors}
+              onFlagged={onFlagged(cell.x, cell.y)}
+              onSelected={onSelected(cell.x, cell.y)}
             />
           ))}
         </StyledRow>

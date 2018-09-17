@@ -22,7 +22,7 @@ const createBlankBoard = (height, width) => {
         y: j,
         isBomb: false,
         neighbors: 0,
-        mode: 2
+        mode: 0
       });
     }
     rows.push(cells);
@@ -54,6 +54,18 @@ const plantBombs = (board, total, minX, maxX, minY, maxY) => {
     }
   });
   return board;
+};
+
+export const revealCell = (rows, x, y) => {
+  rows[x][y].mode = 2;
+  return [...rows];
+};
+
+export const revealAllCells = (rows, x, y) => {
+  rows.forEach(row => {
+    row.forEach(cell => (cell.mode = 2));
+  });
+  return [...rows];
 };
 
 export const createBoard = (height, width, total) => {

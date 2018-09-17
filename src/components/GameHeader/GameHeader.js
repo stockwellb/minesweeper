@@ -3,10 +3,10 @@ import MineCounter from "../MineCounter";
 import Reset from "../Reset";
 import GameClock from "../GameClock";
 
-const GameHeader = () => {
+const GameHeader = ({ marked }) => {
   return (
     <div>
-      <MineCounter />
+      <MineCounter count={marked} />
       <Reset />
       <GameClock />
     </div>

@@ -1,7 +1,7 @@
 import React from "react";
 
-const MineCounter = () => {
-  return <div>MineCounter</div>;
+const MineCounter = ({ count }) => {
+  return <div>{String(count)}</div>;
 };
 
 export default MineCounter;

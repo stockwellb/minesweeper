@@ -9,15 +9,17 @@ const StyledBaseCell = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid gray;
+  border: 1px solid #d3d3d3;
   margin: 1px;
   height: 2em;
   width: 2em;
 `;
 
 const StyledDefaultCell = styled(StyledBaseCell)`
-  background-color: gray;
+  background-color: #d3d3d3;
 `;
+
+const StyledEmptyCell = styled(StyledBaseCell)``;
 
 const StyledBombCell = styled(StyledBaseCell)`
   background-color: red;
@@ -37,15 +39,21 @@ const StyledNeighborText = styled.p`
           : "black"};
 `;
 
-const Cell = ({ mode, neighbors, isBomb }) => {
+const Cell = ({ mode, neighbors, isBomb, onFlagged, onSelected }) => {
   if (isBomb && mode === REVEALED) {
     return <StyledBombCell />;
+  } else if (neighbors === 0 && mode === REVEALED) {
+    return <StyledEmptyCell />;
   } else {
     switch (mode) {
       case DEFAULT:
-        return <StyledDefaultCell />;
+        return (
+          <StyledDefaultCell onClick={onSelected} onContextMenu={onFlagged} />
+        );
       case MARKED:
-        return <StyledDefaultCell>x</StyledDefaultCell>;
+        return (
+          <StyledDefaultCell onContextMenu={onFlagged}>X</StyledDefaultCell>
+        );
       default:
         return (
           <StyledBaseCell>

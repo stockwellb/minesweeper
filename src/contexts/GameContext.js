@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import { createBoard } from "../utils";
+import { createBoard, revealCell, revealAllCells } from "../utils";
 
 class GameContext extends Component {
   constructor(props) {
     super(props);
     this.state = {
       time: 0,
-      marked: 0,
+      marked: props.bombs,
       rows: []
     };
     this.handleFlagged = this.handleFlagged.bind(this);
-    this.handleUnFlagged = this.handleUnFlagged.bind(this);
     this.handleSelected = this.handleSelected.bind(this);
     this.handleReset = this.handleReset.bind(this);
   }
@@ -21,11 +20,40 @@ class GameContext extends Component {
     });
   }
 
-  handleFlagged(cell) {}
+  handleFlagged(x, y) {
+    return e => {
+      e.preventDefault();
+      this.setState(prevState => {
+        const marked = prevState.rows[x][y].mode === 1;
+        if (marked) {
+          prevState.rows[x][y].mode = 0;
+        } else {
+          prevState.rows[x][y].mode = 1;
+        }
+        return {
+          rows: [...prevState.rows],
+          marked: prevState.marked + (marked ? 1 : -1)
+        };
+      });
+    };
+  }
 
-  handleUnFlagged(cell) {}
-
-  handleSelected(cell) {}
+  handleSelected(x, y) {
+    return e => {
+      const cell = this.state.rows[x][y];
+      if (cell.isBomb) {
+        this.setState(prevState => {
+          const rows = revealAllCells(prevState.rows);
+          return { rows: rows };
+        });
+      } else {
+        this.setState(prevState => {
+          const rows = revealCell(prevState.rows, x, y);
+          return { rows: rows };
+        });
+      }
+    };
+  }
 
   handleReset() {}
 
@@ -35,7 +63,6 @@ class GameContext extends Component {
       marked: this.state.marked,
       rows: this.state.rows,
       handleFlagged: this.handleFlagged,
-      handleUnFlagged: this.handleUnFlagged,
       handleSelected: this.handleSelected,
       handleReset: this.handleReset
     });

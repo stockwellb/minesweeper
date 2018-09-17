@@ -6,7 +6,7 @@ const rows = [
   [
     { id: 0, isBomb: false, neighbors: 2, mode: 0 },
     { id: 1, isBomb: false, neighbors: 2, mode: 2 },
-    { id: 2, isBomb: false, neighbors: 2, mode: 2 }
+    { id: 2, isBomb: false, neighbors: 0, mode: 2 }
   ],
   [
     { id: 3, isBomb: false, neighbors: 2, mode: 0 },
