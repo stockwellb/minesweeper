@@ -1,7 +1,7 @@
 import React from "react";
 
-const GameClock = () => {
-  return <div>GameClock</div>;
+const GameClock = ({ time }) => {
+  return <div>{String(time)}</div>;
 };
 
 export default GameClock;

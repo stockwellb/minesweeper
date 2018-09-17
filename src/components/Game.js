@@ -14,11 +14,24 @@ class Game extends Component {
     this.handleReset = this.handleReset.bind(this);
   }
 
+  startTimer() {
+    this.timer = setInterval(() => {
+      this.setState((state, props) => {
+        return { time: state.time + 1 };
+      });
+    }, 1000);
+  }
+
   componentDidMount() {
+    this.startTimer();
     this.setState({
       rows: createBoard(this.props.x, this.props.y, this.props.bombs)
     });
   }
+
+  componentWillUnmount = () => {
+    clearInterval(this.timer);
+  };
 
   handleFlagged(x, y) {
     return e => {
@@ -42,6 +55,7 @@ class Game extends Component {
     return e => {
       const cell = this.state.rows[x][y];
       if (cell.isBomb) {
+        clearInterval(this.timer);
         this.setState(prevState => {
           const rows = revealAllCells(prevState.rows);
           return { rows: rows };
@@ -55,7 +69,15 @@ class Game extends Component {
     };
   }
 
-  handleReset() {}
+  handleReset() {
+    this.setState({
+      marked: this.props.bombs,
+      time: 0,
+      rows: createBoard(this.props.x, this.props.y, this.props.bombs)
+    });
+    clearInterval(this.timer);
+    this.startTimer();
+  }
 
   render() {
     return this.props.children({

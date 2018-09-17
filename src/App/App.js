@@ -6,7 +6,7 @@ import Game from "../components/Game";
 class App extends Component {
   render() {
     return (
-      <Game x={10} y={15} bombs={10}>
+      <Game x={10} y={10} bombs={30}>
         {({
           time,
           marked,
