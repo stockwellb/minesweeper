@@ -6,11 +6,24 @@ import GameContext from "../contexts/GameContext";
 class App extends Component {
   render() {
     return (
-      <GameContext height={10} width={10}>
-        {() => (
+      <GameContext x={10} y={15} bombs={10}>
+        {({
+          time,
+          marked,
+          rows,
+          handleFlagged,
+          handleUnFlagged,
+          handleSelected,
+          handleReset
+        }) => (
           <div>
-            <GameHeader />
-            <GameBoard />
+            <GameHeader time={time} marked={marked} onReset={handleReset} />
+            <GameBoard
+              rows={rows}
+              onFlagged={handleFlagged}
+              onUnFlagged={handleUnFlagged}
+              onSelected={handleSelected}
+            />
           </div>
         )}
       </GameContext>
