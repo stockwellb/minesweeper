@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { createBoard, revealCell, revealAllCells } from "../utils";
 
-class GameContext extends Component {
+class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,4 +69,4 @@ class GameContext extends Component {
   }
 }
 
-export default GameContext;
+export default Game;

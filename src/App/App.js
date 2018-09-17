@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import GameBoard from "../components/GameBoard";
 import GameHeader from "../components/GameHeader";
-import GameContext from "../contexts/GameContext";
+import Game from "../components/Game";
 
 class App extends Component {
   render() {
     return (
-      <GameContext x={10} y={15} bombs={10}>
+      <Game x={10} y={15} bombs={10}>
         {({
           time,
           marked,
@@ -24,7 +24,7 @@ class App extends Component {
             />
           </div>
         )}
-      </GameContext>
+      </Game>
     );
   }
 }
