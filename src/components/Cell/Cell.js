@@ -1,5 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBomb } from "@fortawesome/free-solid-svg-icons";
+import { faFlag } from "@fortawesome/free-solid-svg-icons";
 
 const DEFAULT = 0;
 const MARKED = 1;
@@ -22,7 +25,12 @@ const StyledDefaultCell = styled(StyledBaseCell)`
 const StyledEmptyCell = styled(StyledBaseCell)``;
 
 const StyledBombCell = styled(StyledBaseCell)`
-  background-color: red;
+  color: black;
+`;
+
+const StyledFlaggedCell = styled(StyledBaseCell)`
+  background-color: #d3d3d3;
+  color: red;
 `;
 
 const StyledNeighborText = styled.p`
@@ -41,7 +49,11 @@ const StyledNeighborText = styled.p`
 
 const Cell = ({ mode, neighbors, isBomb, onFlagged, onSelected }) => {
   if (isBomb && mode === REVEALED) {
-    return <StyledBombCell />;
+    return (
+      <StyledBombCell>
+        <FontAwesomeIcon icon={faBomb} />
+      </StyledBombCell>
+    );
   } else if (neighbors === 0 && mode === REVEALED) {
     return <StyledEmptyCell />;
   } else {
@@ -52,7 +64,9 @@ const Cell = ({ mode, neighbors, isBomb, onFlagged, onSelected }) => {
         );
       case MARKED:
         return (
-          <StyledDefaultCell onContextMenu={onFlagged}>X</StyledDefaultCell>
+          <StyledFlaggedCell onContextMenu={onFlagged}>
+            <FontAwesomeIcon icon={faFlag} />
+          </StyledFlaggedCell>
         );
       default:
         return (
