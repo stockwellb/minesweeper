@@ -70,33 +70,40 @@ export class MineField {
   }
 
   mark([x, y], callback) {
+    const lookup = {
+      [cellStates.HIDDEN]: cellStates.MARKED_MINE,
+      [cellStates.MARKED_MINE]: cellStates.MARKED_QUESTION,
+      [cellStates.MARKED_QUESTION]: cellStates.HIDDEN
+    };
     const cell = this.field[x][y];
-    if (cell.state === cellStates.HIDDEN) {
-      cell.state = cellStates.MARKED_MINE;
-    } else if (cell.state === cellStates.MARKED_MINE) {
-      cell.state = cellStates.MARKED_QUESTION;
-    } else {
-      cell.state = cellStates.HIDDEN;
-    }
+    cell.state = lookup[cell.state] || cellStates.HIDDEN;
     callback([...this.field]);
   }
 
   revealAll() {
+    const lookup = {
+      [`true-${cellStates.HIDDEN}`]: cellStates.MINE,
+      [`true-${cellStates.EXPLODED_MINE}`]: cellStates.EXPLODED_MINE,
+      [`true-${cellStates.zero}`]: cellStates.MINE,
+      [`true-${cellStates.one}`]: cellStates.MINE,
+      [`true-${cellStates.two}`]: cellStates.MINE,
+      [`true-${cellStates.three}`]: cellStates.MINE,
+      [`true-${cellStates.four}`]: cellStates.MINE,
+      [`true-${cellStates.five}`]: cellStates.MINE,
+      [`true-${cellStates.six}`]: cellStates.MINE,
+      [`true-${cellStates.seven}`]: cellStates.MINE,
+      [`true-${cellStates.eight}`]: cellStates.MINE
+    };
     this.field.forEach(row => {
       row.forEach(cell => {
-        if (cell.isMine && cell.state === cellStates.HIDDEN) {
-          cell.state = cellStates.MINE;
-        } else if (
-          !cell.isMine &&
-          cell.state === cellStates.HIDDEN &&
-          cell.neighbors > 0
-        ) {
+        const key = `${cell.isMine}-${cell.state}`;
+        cell.state = lookup[key] || cell.state;
+
+        if (!cell.isMine && cell.neighbors > 0) {
           cell.state = String(cell.neighbors);
-        } else if (cell.isMine && cell.state === cellStates.EXPLODED_MINE) {
-          //do nothing
-        } else if (numbers.includes(cell.state)) {
-          //do nothing
-        } else {
+        }
+
+        if (!cell.isMine && cell.neighbors === 0) {
           cell.state = cellStates.EMPTY;
         }
       });
