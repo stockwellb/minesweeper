@@ -13,7 +13,7 @@ const StyledDiv = styled.div`
 class App extends Component {
   render() {
     return (
-      <Game x={10} y={10} bombs={30}>
+      <Game x={10} y={10} bombs={10}>
         {({
           time,
           marked,

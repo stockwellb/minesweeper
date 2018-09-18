@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { createBoard, revealCell, revealAllCells } from "../utils";
+import { Component } from "react";
+import { MineField } from "../minefield";
 
 class Game extends Component {
   constructor(props) {
@@ -9,74 +9,60 @@ class Game extends Component {
       marked: props.bombs,
       rows: []
     };
+    this.mineField = new MineField({
+      x: props.x,
+      y: props.y,
+      numberOfMines: props.bombs
+    });
     this.handleFlagged = this.handleFlagged.bind(this);
     this.handleSelected = this.handleSelected.bind(this);
     this.handleReset = this.handleReset.bind(this);
   }
 
   startTimer() {
-    this.timer = setInterval(() => {
+    this.mineField.start(time => {
       this.setState((state, props) => {
-        return { time: state.time + 1 };
+        return { time: time };
       });
-    }, 1000);
+    });
   }
 
   componentDidMount() {
     this.startTimer();
     this.setState({
-      rows: createBoard(this.props.x, this.props.y, this.props.bombs)
+      rows: this.mineField.field
     });
   }
 
   componentWillUnmount = () => {
-    clearInterval(this.timer);
+    this.mineField.stop();
   };
 
   handleFlagged(x, y) {
     return e => {
       e.preventDefault();
-      this.setState(prevState => {
-        const marked = prevState.rows[x][y].mode === 1;
-        if (marked) {
-          prevState.rows[x][y].mode = 0;
-        } else {
-          prevState.rows[x][y].mode = 1;
-        }
-        return {
-          rows: [...prevState.rows],
-          marked: prevState.marked + (marked ? 1 : -1)
-        };
+      this.mineField.mark([x, y], field => {
+        this.setState({ rows: field });
       });
     };
   }
 
   handleSelected(x, y) {
     return e => {
-      const cell = this.state.rows[x][y];
-      if (cell.isBomb) {
-        clearInterval(this.timer);
-        this.setState(prevState => {
-          const rows = revealAllCells(prevState.rows);
-          return { rows: rows };
-        });
-      } else {
-        this.setState(prevState => {
-          const rows = revealCell(prevState.rows, x, y);
-          return { rows: rows };
-        });
-      }
+      this.mineField.reveal([x, y], field => {
+        this.setState({ rows: field });
+      });
     };
   }
 
   handleReset() {
-    this.setState({
-      marked: this.props.bombs,
-      time: 0,
-      rows: createBoard(this.props.x, this.props.y, this.props.bombs)
+    this.mineField.reset(field => {
+      this.setState({
+        marked: this.props.bombs,
+        time: 0,
+        rows: field
+      });
     });
-    clearInterval(this.timer);
-    this.startTimer();
   }
 
   render() {

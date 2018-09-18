@@ -2,11 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBomb } from "@fortawesome/free-solid-svg-icons";
+import { faBug } from "@fortawesome/free-solid-svg-icons";
 import { faFlag } from "@fortawesome/free-solid-svg-icons";
-
-const DEFAULT = 0;
-const MARKED = 1;
-const REVEALED = 2;
+import { faQuestion } from "@fortawesome/free-solid-svg-icons";
+import { cellStates } from "../../minefield";
 
 const StyledBaseCell = styled.div`
   display: flex;
@@ -47,36 +46,96 @@ const StyledNeighborText = styled.p`
           : "black"};
 `;
 
-const Cell = ({ mode, neighbors, isBomb, onFlagged, onSelected }) => {
-  if (isBomb && mode === REVEALED) {
-    return (
-      <StyledBombCell>
-        <FontAwesomeIcon icon={faBomb} />
-      </StyledBombCell>
-    );
-  } else if (neighbors === 0 && mode === REVEALED) {
-    return <StyledEmptyCell />;
-  } else {
-    switch (mode) {
-      case DEFAULT:
-        return (
-          <StyledDefaultCell onClick={onSelected} onContextMenu={onFlagged} />
-        );
-      case MARKED:
-        return (
-          <StyledFlaggedCell onContextMenu={onFlagged}>
-            <FontAwesomeIcon icon={faFlag} />
-          </StyledFlaggedCell>
-        );
-      default:
-        return (
-          <StyledBaseCell>
-            <StyledNeighborText neighbors={neighbors}>
-              {neighbors}
-            </StyledNeighborText>
-          </StyledBaseCell>
-        );
-    }
+const Cell = ({ state, onFlagged, onSelected }) => {
+  switch (state) {
+    case cellStates.HIDDEN:
+      return (
+        <StyledDefaultCell onClick={onSelected} onContextMenu={onFlagged} />
+      );
+    case cellStates.EMPTY:
+      return <StyledEmptyCell />;
+    case cellStates.MINE:
+      return (
+        <StyledBombCell>
+          <FontAwesomeIcon icon={faBomb} />
+        </StyledBombCell>
+      );
+    case cellStates.EXPLODED_MINE:
+      return (
+        <StyledBombCell>
+          <FontAwesomeIcon icon={faBug} />
+        </StyledBombCell>
+      );
+    case cellStates.MARKED_MINE:
+      return (
+        <StyledFlaggedCell onContextMenu={onFlagged}>
+          <FontAwesomeIcon icon={faFlag} />
+        </StyledFlaggedCell>
+      );
+    case cellStates.MARKED_INCORRECT:
+      return (
+        <StyledFlaggedCell onContextMenu={onFlagged}>
+          <FontAwesomeIcon icon={faFlag} />
+        </StyledFlaggedCell>
+      );
+    case cellStates.MARKED_QUESTION:
+      return (
+        <StyledFlaggedCell onContextMenu={onFlagged}>
+          <FontAwesomeIcon icon={faQuestion} />
+        </StyledFlaggedCell>
+      );
+    case cellStates.zero:
+      return <StyledEmptyCell />;
+    case cellStates.one:
+      return (
+        <StyledBaseCell>
+          <StyledNeighborText neighbors={1}>1</StyledNeighborText>
+        </StyledBaseCell>
+      );
+    case cellStates.two:
+      return (
+        <StyledBaseCell>
+          <StyledNeighborText neighbors={2}>2</StyledNeighborText>
+        </StyledBaseCell>
+      );
+    case cellStates.three:
+      return (
+        <StyledBaseCell>
+          <StyledNeighborText neighbors={3}>3</StyledNeighborText>
+        </StyledBaseCell>
+      );
+    case cellStates.four:
+      return (
+        <StyledBaseCell>
+          <StyledNeighborText neighbors={4}>4</StyledNeighborText>
+        </StyledBaseCell>
+      );
+    case cellStates.five:
+      return (
+        <StyledBaseCell>
+          <StyledNeighborText neighbors={5}>5</StyledNeighborText>
+        </StyledBaseCell>
+      );
+    case cellStates.six:
+      return (
+        <StyledBaseCell>
+          <StyledNeighborText neighbors={6}>6</StyledNeighborText>
+        </StyledBaseCell>
+      );
+    case cellStates.seven:
+      return (
+        <StyledBaseCell>
+          <StyledNeighborText neighbors={7}>7</StyledNeighborText>
+        </StyledBaseCell>
+      );
+    case cellStates.eight:
+      return (
+        <StyledBaseCell>
+          <StyledNeighborText neighbors={8}>8</StyledNeighborText>
+        </StyledBaseCell>
+      );
+    default:
+      return <StyledEmptyCell />;
   }
 };
 

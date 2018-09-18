@@ -14,9 +14,7 @@ const GameBoard = ({ rows, onFlagged, onSelected }) => {
           {row.map(cell => (
             <Cell
               key={cell.id}
-              mode={cell.mode}
-              isBomb={cell.isBomb}
-              neighbors={cell.neighbors}
+              state={cell.state}
               onFlagged={onFlagged(cell.x, cell.y)}
               onSelected={onSelected(cell.x, cell.y)}
             />
