@@ -4,17 +4,6 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-const numbers = [
-  cellStates.one,
-  cellStates.two,
-  cellStates.three,
-  cellStates.four,
-  cellStates.five,
-  cellStates.six,
-  cellStates.seven,
-  cellStates.eight
-];
-
 export class MineField {
   constructor({ x = 10, y = 10, numberOfMines = 5 }) {
     this.dimensions = [x, y];
